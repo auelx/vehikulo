@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+</head>
+<body class="container">
+  <nav>
+    <ul>
+      <li>
+        <img src="vehikulo.png" alt="">
+      </li>
+      <li>
+        <strong>
+          VEHIKULO: MOTORCYCLE TRACKING AND SMS EMERGENCY SYSTEM
+        </strong>
+      </li>
+      <li>
+        <img src="cnshs.png" alt="">
+      </li>
+    </ul>
+  </nav>
+  <main class="container">
+    <div class="grid">
+      <div class="grid">
+        <hgroup>
+        <p><strong>Victim Information</strong></p>
+        <p>Fullname: Juan Dela Cruz</p>
+        <p>Address: Purok 5, Borabod, Daet, Camarines Norte</p>
+        <p>Contact No: (63) 9465656541</p>
+        <hr>
+        </hgroup>
+      </div>
+      <div class="grid">
+        <hgroup>
+        <p><strong>Vehicle Information</strong></p>
+        <p>Type: Motorcycle</p>
+        <p>Model: Yamaha XSR155</p>
+        <p>Plate No: XX1234</p>
+        <hr>
+        </hgroup>
+      </div>
+      <div class="grid">
+        <hgroup>
+        <p><strong>Emergency Contact</strong></p>
+        <p>Name: Fe Dela Cruz</p>
+        <p>Contact No:(63) 9301234567</p>
+        <p>Address: Purok 5, Borabod, Daet, Camarines Norte</p>
+        <hr>
+        </hgroup>
+      </div>
+    </div>
+    <h3 align="center">Note: TO BE CONFIRMED ON-SITE</h3>
+    <figure>
+      <div id="map" style="width:100vh; height:400px" layout="responsive"></div>
+    </figure>
+   
+  </main>
+  <footer>
+    <hr/>
+    <p>©2023 by VEHIKULO</p>
+  </footer>
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+	  let coords = urlParams.get('location').split(",");
+
+// Output value to console
+//console.log(sectionName);
+
+	const map = L.map('map').setView(coords, 13);
+
+	const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		maxZoom: 19,
+		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	}).addTo(map);
+
+	const marker = L.marker(coords).addTo(map)
+		.bindPopup('<b>Hello world!</b><br />I am a popup.').openPopup();
+
+	const popup = L.popup()
+		.setLatLng(coords)
+		.setContent('I am a standalone popup.')
+		.openOn(map);
+
+	function onMapClick(e) {
+		popup
+			.setLatLng(e.latlng)
+			.setContent(`You clicked the map at ${e.latlng.toString()}`)
+			.openOn(map);
+	}
+
+	map.on('click', onMapClick);
+  </script>
+  
+</body>
+</html>
